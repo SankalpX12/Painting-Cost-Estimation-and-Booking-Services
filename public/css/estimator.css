@@ -177,7 +177,6 @@ a {
     }
 }
 
-@media (max-width: 800px) {
     .page-shell {
     width: min(1120px, calc(100% - 40px));
     margin: 0 auto;
@@ -1002,88 +1001,6 @@ button:disabled {
     .result-panel {
         position: static;
         grid-row: 1;
-    }
-
-    .colour-picker-row {
-        margin-top: 16px;
-    }
-
-    .colour-picker-row input[type="color"] {
-        width: 64px;
-        height: 44px;
-        padding: 3px;
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        background: var(--surface);
-        cursor: pointer;
-    }
-
-    .room-preview {
-        width: 100%;
-        max-width: 440px;
-        aspect-ratio: 16 / 9;
-        margin-top: 18px;
-        overflow: hidden;
-        display: grid;
-        grid-template-rows: 1fr 10px 24px;
-        border: 1px solid var(--line);
-        background: #e7e5df;
-    }
-
-    .room-wall {
-        min-height: 0;
-        background: #f4f1ea;
-        transition: background-color 180ms ease;
-    }
-
-    .room-trim {
-        border-top: 1px solid #d5d2ca;
-        background: #ffffff;
-    }
-
-    .room-floor {
-        background: repeating-linear-gradient(90deg, #aa8866 0 42px, #987655 42px 44px);
-    }
-
-    .colour-name {
-        margin: 10px 0 18px;
-        color: var(--green-dark);
-        font-weight: 700;
-    }
-
-    .colour-actions {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        align-items: end;
-        gap: 10px;
-    }
-
-    .colour-actions > label {
-        margin-bottom: 8px;
-    }
-
-    .matching-colours {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-        margin-top: 14px;
-    }
-
-    .matching-colour {
-        min-width: 0;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--muted);
-        font-size: 0.78rem;
-    }
-
-    .matching-swatch {
-        flex: 0 0 30px;
-        width: 30px;
-        height: 30px;
-        border: 1px solid var(--line);
-        border-radius: 50%;
     }
 }
 
