@@ -1,0 +1,249 @@
+<!-- Collects home details and displays a live painting estimate. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f3">
+    <title>Painting Estimate | Code Crusaders</title>
+    <link rel="stylesheet" href="/css/estimator.css">
+    <script src="/js/estimate.js" defer></script>
+    <script src="/js/estimator.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" href="/">PAINT ESTIMATOR</a>
+        <nav aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a class="nav-current" href="/estimator.html" aria-current="page">Estimator</a>
+            <a id="history-link" href="/my-estimates.html" hidden>My Estimates</a>
+            <a id="bookings-link" href="/my-bookings.html" hidden>My Bookings</a>
+            <a id="account-link" href="/login.html">Sign in</a>
+            <button id="logout-button" class="nav-button" type="button" hidden>Sign out</button>
+        </nav>
+    </header>
+
+    <main class="page-shell">
+        <div class="page-heading">
+            <p class="eyebrow">Home painting service</p>
+            <h1>Build your estimate</h1>
+            <p class="intro">Choose your home size and finish. Your estimate updates as you go.</p>
+        </div>
+
+        <div class="estimate-layout">
+            <section id="login-required" class="auth-prompt" aria-labelledby="login-required-title" hidden>
+                <p class="eyebrow">Account required</p>
+                <h2 id="login-required-title">Sign in to start your estimate</h2>
+                <p>Your estimate details are available after you sign in.</p>
+                <div class="auth-actions">
+                    <a class="button button-primary" href="/login.html?next=estimator.html">Sign in</a>
+                    <a class="button button-secondary" href="/register.html?next=estimator.html">Create account</a>
+                </div>
+            </section>
+            <form id="estimator-form" class="estimator-form" novalidate>
+                <section class="form-section" aria-labelledby="home-size-title">
+                    <div class="section-heading">
+                        <span class="step-number">01</span>
+                        <div>
+                            <h2 id="home-size-title">Home size</h2>
+                            <p>Choose a home type or enter your wall area.</p>
+                        </div>
+                    </div>
+                    <label class="field-label" for="home-type">Home type</label>
+                    <select id="home-type" name="homeType">
+                        <option value="bhk-1">1 BHK · 450 sq ft floor area</option>
+                        <option value="bhk-2" selected>2 BHK · 750 sq ft floor area</option>
+                        <option value="bhk-3">3 BHK · 1,100 sq ft floor area</option>
+                        <option value="custom">Custom wall area</option>
+                    </select>
+                    <div id="custom-area-field" class="conditional-field" hidden>
+                        <label class="field-label" for="custom-wall-area">Wall area (sq ft)</label>
+                        <input id="custom-wall-area" name="customWallArea" type="number" min="50" max="20000" step="1" inputmode="decimal" placeholder="For example, 1,000">
+                        <p class="field-hint">Enter the wall area to be painted, not the floor area.</p>
+                    </div>
+                </section>
+
+                <section class="form-section" aria-labelledby="painting-type-title">
+                    <div class="section-heading">
+                        <span class="step-number">02</span>
+                        <div>
+                            <h2 id="painting-type-title">Painting type</h2>
+                            <p>Touch-up covers the full selected area, with primer only.</p>
+                        </div>
+                    </div>
+                    <div class="choice-row" role="radiogroup" aria-label="Painting type">
+                        <label class="choice-option">
+                            <input type="radio" name="paintingType" value="fresh" checked>
+                            <span>Fresh painting</span>
+                        </label>
+                        <label class="choice-option">
+                            <input type="radio" name="paintingType" value="touchup">
+                            <span>Repaint touch-up</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="form-section" aria-labelledby="quality-title">
+                    <div class="section-heading">
+                        <span class="step-number">03</span>
+                        <div>
+                            <h2 id="quality-title">Paint quality</h2>
+                            <p>Prices shown are indicative rates per paintable sq ft.</p>
+                        </div>
+                    </div>
+                    <div id="quality-options" class="quality-options"></div>
+                </section>
+
+                <section class="form-section" aria-labelledby="openings-title">
+                    <div class="section-heading">
+                        <span class="step-number">04</span>
+                        <div>
+                            <h2 id="openings-title">Doors and windows</h2>
+                            <p>Add your own openings. If you add none, standard counts are used.</p>
+                        </div>
+                    </div>
+                    <div id="opening-list" class="opening-list" aria-live="polite"></div>
+                    <p id="default-openings-note" class="notice" role="status"></p>
+                    <button id="add-opening" class="button button-secondary" type="button">Add a door or window</button>
+                </section>
+
+                <section class="form-section" aria-labelledby="ceiling-title">
+                    <div class="section-heading">
+                        <span class="step-number">05</span>
+                        <div>
+                            <h2 id="ceiling-title">Ceiling</h2>
+                            <p>The ceiling uses the same rates and has no opening deduction.</p>
+                        </div>
+                    </div>
+                    <label class="checkbox-option">
+                        <input id="include-ceiling" name="includeCeiling" type="checkbox">
+                        <span>Include ceiling in estimate</span>
+                    </label>
+                    <div id="custom-ceiling-field" class="conditional-field" hidden>
+                        <label class="field-label" for="custom-ceiling-area">Ceiling area (sq ft)</label>
+                        <input id="custom-ceiling-area" name="customCeilingArea" type="number" min="1" max="20000" step="1" inputmode="decimal" placeholder="Enter ceiling area">
+                    </div>
+                </section>
+                <section class="form-section" aria-labelledby="design-title">
+                    <div class="section-heading">
+                        <span class="step-number">06</span>
+                        <div>
+                            <h2 id="design-title">Custom design</h2>
+                            <p>Add a measured feature area to your estimate.</p>
+                        </div>
+                    </div>
+                    <label class="checkbox-option">
+                        <input id="include-design" type="checkbox">
+                        <span>Add custom design</span>
+                    </label>
+                    <div id="design-fields" class="conditional-field" hidden>
+                        <label class="field-label" for="design-area">Design area (sq ft)</label>
+                        <input id="design-area" type="number" min="1" step="1" inputmode="decimal" placeholder="For example, 100">
+                        <label class="field-label" for="design-description">Short description</label>
+                        <textarea id="design-description" rows="3" maxlength="200" placeholder="Describe the design area"></textarea>
+                        <p class="field-hint">Custom design: ₹50 per sq ft. Area cannot exceed the paintable area.</p>
+                    </div>
+                </section>
+                <section class="form-section form-section-last" aria-labelledby="colour-title">
+                    <div class="section-heading">
+                        <span class="step-number">07</span>
+                        <div>
+                            <h2 id="colour-title">Main colour</h2>
+                            <p>Pick a palette colour or choose any colour.</p>
+                        </div>
+                    </div>
+                    <label class="field-label" for="main-colour">Starter palette</label>
+                    <select id="main-colour" name="mainColour"></select>
+                    <div class="colour-picker-row">
+                        <label class="field-label" for="custom-main-colour">Custom colour</label>
+                        <input id="custom-main-colour" type="color" value="#F4F1EA">
+                    </div>
+                    <div class="room-preview" aria-label="Room colour preview">
+                        <div id="room-wall" class="room-wall"></div>
+                        <div class="room-trim"></div>
+                        <div class="room-floor"></div>
+                    </div>
+                    <p id="main-colour-name" class="colour-name">Soft White</p>
+                    <div class="colour-actions">
+                        <button id="name-colour" class="button button-secondary" type="button">Name this colour</button>
+                        <label class="field-label" for="scheme-mode">Matching colours</label>
+                        <select id="scheme-mode">
+                            <option value="monochrome">Monochrome</option>
+                            <option value="analogic">Analogic</option>
+                            <option value="complement">Complement</option>
+                            <option value="triad">Triad</option>
+                            <option value="quad">Quad</option>
+                        </select>
+                        <button id="find-schemes" class="button button-secondary" type="button">Find matches</button>
+                    </div>
+                    <p id="colour-api-note" class="field-hint" role="status" hidden></p>
+                    <div id="matching-colours" class="matching-colours" aria-live="polite"></div>
+                    <div class="accent-section">
+                        <h3>Accent colours</h3>
+                        <p class="field-hint">Add up to 3 accents. Their total area cannot exceed the paintable area.</p>
+                        <div id="accent-list" class="accent-list"></div>
+                        <button id="add-accent" class="button button-secondary" type="button">Add accent colour</button>
+                    </div>
+                </section>
+            </form>
+
+            <aside class="result-panel" aria-labelledby="result-title">
+                <div class="result-topline">
+                    <p class="eyebrow">Your estimate</p>
+                    <span class="estimate-tag">Indicative</span>
+                </div>
+                <h2 id="result-title">Cost breakdown</h2>
+                <p class="result-caption">Rates are placeholders and may be changed by the project administrator.</p>
+                <div id="estimate-error" class="error-message" role="alert" hidden></div>
+                <div id="estimate-details" class="estimate-details"></div>
+                <dl class="cost-lines">
+                    <div>
+                        <dt>Paint Material Costs</dt>
+                        <dd id="paint-cost">₹0</dd>
+                    </div>
+                    <div>
+                        <dt>Putty/Primer Undercoat</dt>
+                        <dd id="putty-cost">₹0</dd>
+                    </div>
+                    <div>
+                        <dt>Labor Charges</dt>
+                        <dd id="labour-cost">₹0</dd>
+                    </div>
+                </dl>
+                <section class="cost-chart" aria-label="Cost comparison chart">
+                    <div class="chart-row">
+                        <div class="chart-label"><span>Paint</span><strong id="chart-paint-amount">₹0</strong></div>
+                        <div class="chart-track"><span id="chart-paint-bar" class="chart-bar chart-paint"></span></div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-label"><span>Putty / primer</span><strong id="chart-putty-amount">₹0</strong></div>
+                        <div class="chart-track"><span id="chart-putty-bar" class="chart-bar chart-putty"></span></div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-label"><span>Labour</span><strong id="chart-labour-amount">₹0</strong></div>
+                        <div class="chart-track"><span id="chart-labour-bar" class="chart-bar chart-labour"></span></div>
+                    </div>
+                </section>
+                <div id="design-cost-row" class="extra-cost-line" hidden>
+                    <span>Custom Design</span>
+                    <strong id="design-cost">₹0</strong>
+                </div>
+                <div id="extra-colour-cost-row" class="extra-cost-line" hidden>
+                    <span>Additional Colours</span>
+                    <strong id="extra-colour-cost">₹0</strong>
+                </div>
+                <div class="total-line">
+                    <span>Total estimate</span>
+                    <strong id="estimate-total">₹0</strong>
+                </div>
+                <button id="print-estimate" class="button button-secondary save-button" type="button">Print / Save as PDF</button>
+                <button id="save-estimate" class="button button-primary save-button" type="button" disabled>Save estimate</button>
+                <button id="book-estimate" class="button button-secondary save-button" type="button" disabled>Book this estimate</button>
+                <p id="save-status" class="save-status" role="status" hidden></p>
+                <p class="no-tax-note">No taxes included. Final service pricing may differ.</p>
+            </aside>
+        </div>
+    </main>
+    <footer class="site-footer">Code Crusaders <span>CSE326 · Internet Programming</span></footer>
+</body>
+</html>

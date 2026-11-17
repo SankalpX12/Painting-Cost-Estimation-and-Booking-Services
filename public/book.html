@@ -1,0 +1,100 @@
+<!-- Collects a customer's preferred date and address for an estimate booking. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f3">
+    <title>Book Painting Service | Home Painting Estimator</title>
+    <link rel="stylesheet" href="/css/estimator.css">
+    <script src="/js/book.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" href="/">PAINT ESTIMATOR</a>
+        <nav aria-label="Main navigation">
+            <a href="/estimator.html">Estimator</a>
+            <a href="/my-estimates.html">My Estimates</a>
+            <a href="/my-bookings.html">My Bookings</a>
+        </nav>
+    </header>
+    <main class="page-shell booking-page">
+        <div class="page-heading">
+            <p class="eyebrow">Booking request</p>
+            <h1>Choose a start date</h1>
+            <p class="intro">Your booking will be submitted as pending. No payment is collected.</p>
+        </div>
+        <section class="booking-panel" aria-labelledby="booking-estimate-title">
+            <h2 id="booking-estimate-title">Estimate summary</h2>
+            <p id="booking-estimate-summary" class="booking-summary">Loading selected estimate…</p>
+        </section>
+        <form id="booking-form" class="booking-form" novalidate hidden>
+            <section class="form-section">
+                <div class="section-heading">
+                    <span class="step-number">01</span>
+                    <div>
+                        <h2>Contact details</h2>
+                        <p>We’ll use these details about the booking.</p>
+                    </div>
+                </div>
+                <div class="booking-fields">
+                    <div>
+                        <label class="field-label" for="booking-name">Full name</label>
+                        <input id="booking-name" name="name" type="text" autocomplete="name" required>
+                    </div>
+                    <div>
+                        <label class="field-label" for="booking-phone">Phone number</label>
+                        <input id="booking-phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" autocomplete="tel" required>
+                    </div>
+                    <div class="field-wide">
+                        <label class="field-label" for="booking-email">Email</label>
+                        <input id="booking-email" name="email" type="email" autocomplete="email" required>
+                    </div>
+                </div>
+            </section>
+            <section class="form-section">
+                <div class="section-heading">
+                    <span class="step-number">02</span>
+                    <div>
+                        <h2>Service address</h2>
+                        <p>Enter where the painting work is requested.</p>
+                    </div>
+                </div>
+                <div class="booking-fields">
+                    <div class="field-wide">
+                        <label class="field-label" for="booking-address">Address</label>
+                        <input id="booking-address" name="address" type="text" autocomplete="street-address" required>
+                    </div>
+                    <div>
+                        <label class="field-label" for="booking-city">City</label>
+                        <input id="booking-city" name="city" type="text" autocomplete="address-level2" required>
+                    </div>
+                    <div>
+                        <label class="field-label" for="booking-pincode">Pincode</label>
+                        <input id="booking-pincode" name="pincode" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" required>
+                    </div>
+                </div>
+            </section>
+            <section class="form-section form-section-last">
+                <div class="section-heading">
+                    <span class="step-number">03</span>
+                    <div>
+                        <h2>Preferred timing</h2>
+                        <p>Choose a date today or later. The team will confirm the booking.</p>
+                    </div>
+                </div>
+                <label class="field-label" for="booking-date">Preferred start date</label>
+                <input id="booking-date" name="preferredStartDate" type="date" required>
+                <div class="conditional-field">
+                    <label class="field-label" for="booking-notes">Notes (optional)</label>
+                    <textarea id="booking-notes" name="notes" rows="3" maxlength="500"></textarea>
+                </div>
+                <p id="booking-error" class="error-message" role="alert" hidden></p>
+                <p id="booking-success" class="save-status" role="status" hidden></p>
+                <button class="button button-primary auth-submit" type="submit">Submit booking request</button>
+            </section>
+        </form>
+    </main>
+    <footer class="site-footer">Code Crusaders <span>CSE326 · Internet Programming</span></footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!-- Creates a customer account for the estimator and booking service. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f3">
+    <title>Create Account | Home Painting Estimator</title>
+    <link rel="stylesheet" href="/css/estimator.css">
+    <script src="/js/auth.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" href="/">PAINT ESTIMATOR</a>
+        <nav aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="/estimator.html">Estimator</a>
+            <a class="nav-current" href="/register.html" aria-current="page">Create account</a>
+        </nav>
+    </header>
+    <main class="auth-page">
+        <section class="auth-panel" aria-labelledby="register-title">
+            <p class="eyebrow">Customer account</p>
+            <h1 id="register-title">Create account</h1>
+            <p class="auth-description">Your details are used for estimate history and booking.</p>
+            <form id="register-form" novalidate>
+                <label class="field-label" for="register-name">Full name</label>
+                <input id="register-name" name="name" type="text" autocomplete="name" required>
+                <label class="field-label" for="register-email">Email</label>
+                <input id="register-email" name="email" type="email" autocomplete="email" required>
+                <label class="field-label" for="register-phone">Phone number</label>
+                <input id="register-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" pattern="[0-9]{10}" maxlength="10" required>
+                <p class="field-hint">Enter 10 digits without spaces.</p>
+                <label class="field-label" for="register-password">Password</label>
+                <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                <p class="field-hint">Use at least 8 characters.</p>
+                <p id="register-error" class="error-message" role="alert" hidden></p>
+                <button class="button button-primary auth-submit" type="submit">Create account</button>
+            </form>
+            <p class="auth-switch">Already registered? <a href="/login.html">Sign in</a></p>
+        </section>
+    </main>
+    <footer class="site-footer">Code Crusaders <span>CSE326 · Internet Programming</span></footer>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!-- Lists the customer's bookings and allows pending bookings to be cancelled. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f3">
+    <title>My Bookings | Home Painting Estimator</title>
+    <link rel="stylesheet" href="/css/estimator.css">
+    <script src="/js/my-bookings.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" href="/">PAINT ESTIMATOR</a>
+        <nav aria-label="Main navigation">
+            <a href="/estimator.html">Estimator</a>
+            <a href="/my-estimates.html">My Estimates</a>
+            <a class="nav-current" href="/my-bookings.html" aria-current="page">My Bookings</a>
+            <button id="bookings-logout" class="nav-button" type="button">Sign out</button>
+        </nav>
+    </header>
+    <main class="page-shell">
+        <div class="page-heading">
+            <p class="eyebrow">Customer account</p>
+            <h1>My Bookings</h1>
+            <p class="intro">See your booking requests and current status.</p>
+        </div>
+        <p id="bookings-message" class="history-message" role="status">Loading your bookings…</p>
+        <div id="booking-list" class="saved-estimate-list"></div>
+    </main>
+    <footer class="site-footer">Code Crusaders <span>CSE326 · Internet Programming</span></footer>
+</body>
+</html>

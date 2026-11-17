@@ -1,0 +1,39 @@
+<!-- Signs customers in before they use the estimator. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f3">
+    <title>Sign In | Home Painting Estimator</title>
+    <link rel="stylesheet" href="/css/estimator.css">
+    <script src="/js/auth.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" href="/">PAINT ESTIMATOR</a>
+        <nav aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="/estimator.html">Estimator</a>
+            <a class="nav-current" href="/login.html" aria-current="page">Sign in</a>
+        </nav>
+    </header>
+    <main class="auth-page">
+        <section class="auth-panel" aria-labelledby="login-title">
+            <p class="eyebrow">Welcome back</p>
+            <h1 id="login-title">Sign in</h1>
+            <p class="auth-description">Use your customer account to continue to the estimator.</p>
+            <form id="login-form" novalidate>
+                <label class="field-label" for="login-email">Email</label>
+                <input id="login-email" name="email" type="email" autocomplete="email" required>
+                <label class="field-label" for="login-password">Password</label>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+                <p id="login-error" class="error-message" role="alert" hidden></p>
+                <button class="button button-primary auth-submit" type="submit">Sign in</button>
+            </form>
+            <p class="auth-switch">New here? <a href="/register.html">Create an account</a></p>
+        </section>
+    </main>
+    <footer class="site-footer">Code Crusaders <span>CSE326 · Internet Programming</span></footer>
+</body>
+</html>

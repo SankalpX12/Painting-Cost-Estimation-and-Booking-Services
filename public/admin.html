@@ -1,0 +1,77 @@
+<!-- Lets administrators manage bookings and estimator rates. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f3">
+    <title>Admin | Home Painting Estimator</title>
+    <link rel="stylesheet" href="/css/estimator.css">
+    <script src="/js/admin.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" href="/">PAINT ESTIMATOR</a>
+        <nav aria-label="Main navigation">
+            <a href="/">Home</a>
+            <button id="admin-logout" class="nav-button" type="button">Sign out</button>
+        </nav>
+    </header>
+    <main class="page-shell">
+        <div class="page-heading">
+            <p class="eyebrow">Administration</p>
+            <h1>Service dashboard</h1>
+        </div>
+        <p id="admin-message" class="history-message" role="status">Checking administrator access…</p>
+        <div id="admin-content" hidden>
+            <section class="admin-section" aria-labelledby="admin-bookings-title">
+                <h2 id="admin-bookings-title">Bookings</h2>
+                <div id="admin-booking-list" class="saved-estimate-list"></div>
+            </section>
+            <section class="admin-section" aria-labelledby="admin-rates-title">
+                <h2 id="admin-rates-title">Estimator rates</h2>
+                <form id="admin-rates-form" class="admin-rates-form" novalidate>
+                    <div class="admin-quality-grid">
+                        <fieldset>
+                            <legend>Economy Distemper</legend>
+                            <label for="economy-paint">Paint ₹/sq ft</label>
+                            <input id="economy-paint" type="number" min="0" step="0.1" required>
+                            <label for="economy-labour">Labour ₹/sq ft</label>
+                            <input id="economy-labour" type="number" min="0" step="0.1" required>
+                            <label for="economy-stars">Stars</label>
+                            <input id="economy-stars" type="number" min="1" max="5" step="1" required>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Premium Plastic Emulsion</legend>
+                            <label for="premium-paint">Paint ₹/sq ft</label>
+                            <input id="premium-paint" type="number" min="0" step="0.1" required>
+                            <label for="premium-labour">Labour ₹/sq ft</label>
+                            <input id="premium-labour" type="number" min="0" step="0.1" required>
+                            <label for="premium-stars">Stars</label>
+                            <input id="premium-stars" type="number" min="1" max="5" step="1" required>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Luxury Silk / Royal Sheen</legend>
+                            <label for="luxury-paint">Paint ₹/sq ft</label>
+                            <input id="luxury-paint" type="number" min="0" step="0.1" required>
+                            <label for="luxury-labour">Labour ₹/sq ft</label>
+                            <input id="luxury-labour" type="number" min="0" step="0.1" required>
+                            <label for="luxury-stars">Stars</label>
+                            <input id="luxury-stars" type="number" min="1" max="5" step="1" required>
+                        </fieldset>
+                    </div>
+                    <div class="admin-fee-grid">
+                        <div><label for="putty-rate">Putty ₹/sq ft</label><input id="putty-rate" type="number" min="0" step="0.1" required></div>
+                        <div><label for="primer-rate">Primer ₹/sq ft</label><input id="primer-rate" type="number" min="0" step="0.1" required></div>
+                        <div><label for="design-rate">Custom design ₹/sq ft</label><input id="design-rate" type="number" min="0" step="1" required></div>
+                        <div><label for="colour-fee">Additional colour fee ₹</label><input id="colour-fee" type="number" min="0" step="1" required></div>
+                    </div>
+                    <p id="admin-rate-message" class="save-status" role="status" hidden></p>
+                    <button class="button button-primary" type="submit">Save rate changes</button>
+                </form>
+            </section>
+        </div>
+    </main>
+    <footer class="site-footer">Code Crusaders <span>CSE326 · Internet Programming</span></footer>
+</body>
+</html>
