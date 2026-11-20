@@ -496,13 +496,14 @@ function addAccentRow(savedAccent) {
 // Names the selected colour using The Color API with a short timeout.
 async function nameSelectedColour() {
     const note = document.getElementById('colour-api-note');
+    const requestedHex = selectedMainColour.hex;
     const controller = new AbortController();
     const timeout = window.setTimeout(function () {
         controller.abort();
     }, 4000);
 
     try {
-        const hex = selectedMainColour.hex.slice(1);
+        const hex = requestedHex.slice(1);
         const response = await fetch('https://www.thecolorapi.com/id?hex=' + encodeURIComponent(hex), {
             signal: controller.signal
         });
@@ -512,6 +513,9 @@ async function nameSelectedColour() {
         }
 
         const result = await response.json();
+        if (selectedMainColour.hex !== requestedHex) {
+            return;
+        }
         selectedMainColour.name = result.name.value;
         note.hidden = true;
         renderMainColour();
@@ -528,15 +532,20 @@ async function findMatchingColours() {
     const note = document.getElementById('colour-api-note');
     const matches = document.getElementById('matching-colours');
     const mode = document.getElementById('scheme-mode').value;
+    const requestedHex = selectedMainColour.hex;
     const controller = new AbortController();
     const timeout = window.setTimeout(function () {
         controller.abort();
     }, 4000);
 
+    matches.innerHTML = '';
+    note.textContent = 'Finding colours...';
+    note.hidden = false;
+
     try {
-        const hex = selectedMainColour.hex.slice(1);
+        const hex = requestedHex.slice(1);
         const url = 'https://www.thecolorapi.com/scheme?hex=' + encodeURIComponent(hex)
-            + '&mode=' + encodeURIComponent(mode) + '&count=4';
+            + '&mode=' + encodeURIComponent(mode) + '&count=8';
         const response = await fetch(url, { signal: controller.signal });
 
         if (!response.ok) {
@@ -544,12 +553,24 @@ async function findMatchingColours() {
         }
 
         const result = await response.json();
-        matches.innerHTML = '';
+        if (selectedMainColour.hex !== requestedHex || document.getElementById('scheme-mode').value !== mode) {
+            note.hidden = true;
+            return;
+        }
+
+        if (!Array.isArray(result.colors) || result.colors.length === 0) {
+            throw new Error('No matching colours were returned.');
+        }
 
         for (let index = 0; index < result.colors.length; index += 1) {
             const colour = result.colors[index];
-            const item = document.createElement('div');
+            if (!colour.hex || !/^#[0-9A-Fa-f]{6}$/.test(colour.hex.value) || !colour.name || typeof colour.name.value !== 'string' || !colour.name.value.trim() || colour.name.value.length > 80) {
+                continue;
+            }
+            const item = document.createElement('button');
+            item.type = 'button';
             item.className = 'matching-colour';
+            item.title = 'Use ' + colour.name.value + ' as the main colour';
             const swatch = document.createElement('span');
             swatch.className = 'matching-swatch';
             swatch.style.backgroundColor = colour.hex.value;
@@ -557,9 +578,20 @@ async function findMatchingColours() {
             label.textContent = colour.name.value + ' ' + colour.hex.value;
             item.appendChild(swatch);
             item.appendChild(label);
+            item.addEventListener('click', function () {
+                selectedMainColour = {
+                    name: colour.name.value,
+                    hex: colour.hex.value.toUpperCase()
+                };
+                document.getElementById('main-colour').value = 'custom';
+                renderMainColour();
+            });
             matches.appendChild(item);
         }
 
+        if (matches.children.length === 0) {
+            throw new Error('No valid matching colours were returned.');
+        }
         note.hidden = true;
     } catch (error) {
         note.textContent = 'Matching colours are unavailable right now. Your selected colour and estimate still work.';

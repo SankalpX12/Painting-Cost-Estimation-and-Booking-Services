@@ -56,6 +56,13 @@ async function submitBooking(event) {
     event.preventDefault();
     const errorMessage = document.getElementById('booking-error');
     const successMessage = document.getElementById('booking-success');
+    const submitButton = document.querySelector('#booking-form button[type="submit"]');
+
+    if (submitButton.disabled) {
+        return;
+    }
+
+    submitButton.disabled = true;
     errorMessage.hidden = true;
     successMessage.hidden = true;
 
@@ -98,12 +105,11 @@ async function submitBooking(event) {
 
         window.sessionStorage.removeItem('savedEstimateToBook');
         window.sessionStorage.removeItem('currentEstimateToBook');
-        successMessage.textContent = 'Booking request submitted. Status: pending.';
-        successMessage.hidden = false;
-        document.querySelector('#booking-form button[type="submit"]').disabled = true;
+        window.location.href = '/my-bookings.html';
     } catch (error) {
         errorMessage.textContent = error.message || 'Could not connect to submit the booking.';
         errorMessage.hidden = false;
+        submitButton.disabled = false;
     }
 }
 
