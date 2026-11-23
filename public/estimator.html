@@ -158,12 +158,6 @@
                         <label class="field-label" for="custom-main-colour">Custom colour</label>
                         <input id="custom-main-colour" type="color" value="#F4F1EA">
                     </div>
-                    <div class="room-preview" aria-label="Room colour preview">
-                        <div id="room-wall" class="room-wall"></div>
-                        <div class="room-trim"></div>
-                        <div class="room-floor"></div>
-                    </div>
-                    <p id="main-colour-name" class="colour-name">Soft White</p>
                     <div class="colour-actions">
                         <button id="name-colour" class="button button-secondary" type="button">Name this colour</button>
                         <label class="field-label" for="scheme-mode">Matching colours</label>
@@ -197,6 +191,16 @@
                 </div>
                 <h2 id="result-title">Cost breakdown</h2>
                 <p class="result-caption">Rates are placeholders and may be changed by the project administrator.</p>
+                <figure class="room-preview" aria-label="Live room colour preview">
+                    <div id="room-wall" class="room-wall">
+                        <div class="room-window" aria-hidden="true"><span></span></div>
+                        <div class="room-art" aria-hidden="true"><span></span></div>
+                        <div class="room-console" aria-hidden="true"></div>
+                    </div>
+                    <div class="room-trim"></div>
+                    <div class="room-floor"></div>
+                </figure>
+                <p id="main-colour-name" class="colour-name">Soft White · #F4F1EA</p>
                 <div id="estimate-error" class="error-message" role="alert" hidden></div>
                 <div id="estimate-details" class="estimate-details"></div>
                 <dl class="cost-lines">

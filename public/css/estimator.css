@@ -922,9 +922,9 @@ button:disabled {
 
 .room-preview {
     width: 100%;
-    max-width: 440px;
-    aspect-ratio: 16 / 9;
-    margin-top: 18px;
+    max-width: none;
+    aspect-ratio: 16 / 10;
+    margin: 18px 0 0;
     overflow: hidden;
     display: grid;
     grid-template-rows: 1fr 10px 24px;
@@ -933,9 +933,75 @@ button:disabled {
 }
 
 .room-wall {
+    position: relative;
     min-height: 0;
+    overflow: hidden;
     background: #f4f1ea;
     transition: background-color 180ms ease;
+}
+
+.room-window {
+    position: absolute;
+    top: 13%;
+    right: 12%;
+    width: 28%;
+    max-width: 112px;
+    min-width: 70px;
+    height: 57%;
+    border: 6px solid #ffffff;
+    background: #b8d5d9;
+    box-shadow: 0 4px 10px rgb(29 41 37 / 14%);
+}
+
+.room-window::before,
+.room-window::after {
+    position: absolute;
+    content: "";
+    background: #ffffff;
+}
+
+.room-window::before {
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 2px);
+    width: 4px;
+}
+
+.room-window::after {
+    top: calc(50% - 2px);
+    right: 0;
+    left: 0;
+    height: 4px;
+}
+
+.room-art {
+    position: absolute;
+    top: 19%;
+    left: 13%;
+    width: 19%;
+    min-width: 48px;
+    aspect-ratio: 4 / 3;
+    border: 5px solid #fffdf6;
+    background: #d3a267;
+    box-shadow: 0 4px 10px rgb(29 41 37 / 14%);
+}
+
+.room-art span {
+    position: absolute;
+    inset: 20% 24%;
+    border-radius: 50% 50% 0 0;
+    background: #5b8072;
+}
+
+.room-console {
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+    width: 48%;
+    height: 18%;
+    border-radius: 8px 8px 0 0;
+    background: #527166;
+    box-shadow: 0 -3px 8px rgb(29 41 37 / 12%);
 }
 
 .room-trim {

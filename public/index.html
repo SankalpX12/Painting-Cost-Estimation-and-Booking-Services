@@ -1,81 +1,391 @@
-<!-- Home page for the home painting estimator project. -->
+<!-- Home page for the home painting estimator. -->
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f4f6f3">
+    <meta name="theme-color" content="#e8f1ec">
     <title>Home Painting Estimator</title>
     <style>
         :root {
             color-scheme: light;
-            font-family: "Segoe UI", sans-serif;
-            color: #17231f;
+            --ink: #1d2925;
+            --muted: #64716c;
+            --green: #176b55;
+            --green-dark: #10513f;
+            --coral: #c65e48;
+            --line: #d7dfd9;
+            font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+            color: var(--ink);
             background: #f4f6f3;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            min-height: 100vh;
             margin: 0;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .home-header {
+            min-height: 68px;
+            padding: 0 clamp(20px, 5vw, 72px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border-bottom: 1px solid var(--line);
+            background: #ffffff;
+        }
+
+        .wordmark {
+            color: var(--green-dark);
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .home-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .home-nav a {
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            color: var(--muted);
+            font-size: 0.88rem;
+            text-decoration: none;
+        }
+
+        .home-nav a:focus-visible,
+        .primary-link:focus-visible {
+            outline: 3px solid #e6a18f;
+            outline-offset: 3px;
+        }
+
+        .home-stage {
+            position: relative;
+            min-height: min(720px, calc(100svh - 68px));
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: #d9e7df;
+        }
+
+        .home-room {
+            position: absolute;
+            inset: 0;
             display: grid;
-            place-items: center;
+            grid-template-rows: minmax(0, 1fr) 12px 84px;
         }
 
-        main {
-            width: min(100% - 40px, 680px);
-            padding: 48px 0;
+        .home-wall {
+            position: relative;
+            overflow: hidden;
+            background: #d9e7df;
         }
 
-        p {
-            color: #52615b;
-            line-height: 1.6;
+        .home-window {
+            position: absolute;
+            top: 12%;
+            right: 12%;
+            width: clamp(110px, 19vw, 250px);
+            height: 58%;
+            border: 10px solid #fffdf6;
+            background: #a9cbd1;
+            box-shadow: 0 10px 24px rgb(29 41 37 / 12%);
+        }
+
+        .home-window::before,
+        .home-window::after {
+            position: absolute;
+            content: "";
+            background: #fffdf6;
+        }
+
+        .home-window::before {
+            top: 0;
+            bottom: 0;
+            left: calc(50% - 4px);
+            width: 8px;
+        }
+
+        .home-window::after {
+            top: calc(50% - 4px);
+            right: 0;
+            left: 0;
+            height: 8px;
+        }
+
+        .home-art {
+            position: absolute;
+            top: 24%;
+            right: 38%;
+            width: clamp(74px, 11vw, 136px);
+            aspect-ratio: 4 / 3;
+            border: 8px solid #fffdf6;
+            background: #d59a68;
+            box-shadow: 0 8px 18px rgb(29 41 37 / 12%);
+        }
+
+        .home-art::after {
+            position: absolute;
+            inset: 22% 30%;
+            border-radius: 50% 50% 0 0;
+            background: #5b8072;
+            content: "";
+        }
+
+        .home-console {
+            position: absolute;
+            bottom: 0;
+            right: 18%;
+            width: clamp(150px, 30vw, 380px);
+            height: 16%;
+            border-radius: 10px 10px 0 0;
+            background: #527166;
+            box-shadow: 0 -5px 16px rgb(29 41 37 / 12%);
+        }
+
+        .home-trim {
+            border-top: 2px solid #d5d2ca;
+            background: #fffdf6;
+        }
+
+        .home-floor {
+            background: repeating-linear-gradient(90deg, #a88766 0 70px, #987655 70px 73px);
+        }
+
+        .home-copy {
+            position: relative;
+            z-index: 1;
+            width: min(580px, 58%);
+            margin-left: clamp(24px, 8vw, 120px);
+            padding: 36px 0;
+            animation: arrive 420ms ease-out both;
         }
 
         .eyebrow {
-            color: #176b55;
-            font-size: 0.8rem;
-            font-weight: 700;
+            margin: 0 0 12px;
+            color: var(--green-dark);
+            font-size: 0.78rem;
+            font-weight: 800;
             text-transform: uppercase;
         }
 
         h1 {
-            max-width: 12ch;
-            margin: 12px 0;
-            font-size: 3.2rem;
-            line-height: 1;
+            max-width: 15ch;
+            margin: 0 0 16px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 3.4rem;
+            font-weight: 500;
+            line-height: 1.04;
         }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2.2rem;
-            }
+        .home-description {
+            max-width: 38ch;
+            margin: 0;
+            color: #3e5149;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .home-actions {
+            margin-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
         }
 
         .primary-link {
-            min-height: 44px;
-            margin-top: 16px;
-            padding: 12px 16px;
+            min-height: 48px;
+            padding: 0 18px;
             display: inline-flex;
             align-items: center;
             border-radius: 4px;
-            background: #176b55;
+            background: var(--green-dark);
             color: #ffffff;
             font-weight: 700;
             text-decoration: none;
         }
 
-        .primary-link:focus-visible {
-            outline: 3px solid #c65e48;
-            outline-offset: 3px;
+        .home-secondary {
+            color: var(--green-dark);
+            font-weight: 700;
+            text-decoration-color: var(--coral);
+            text-underline-offset: 4px;
+        }
+
+        .home-next {
+            padding: 30px clamp(24px, 8vw, 120px) 42px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            background: #f4f6f3;
+        }
+
+        .home-next section {
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+        }
+
+        .home-next span {
+            color: var(--coral);
+            font-size: 0.76rem;
+            font-weight: 800;
+        }
+
+        .home-next h2 {
+            margin: 8px 0 4px;
+            font-size: 0.98rem;
+        }
+
+        .home-next p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+
+        @keyframes arrive {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .home-copy { animation: none; }
+        }
+
+        @media (max-width: 700px) {
+            .home-stage {
+                min-height: 620px;
+                align-items: flex-start;
+            }
+
+            .home-room {
+                grid-template-rows: minmax(0, 1fr) 10px 72px;
+            }
+
+            .home-window {
+                top: auto;
+                right: 8%;
+                bottom: 14%;
+                width: clamp(82px, 28vw, 140px);
+                height: 38%;
+                border-width: 7px;
+            }
+
+            .home-art {
+                top: 38%;
+                right: 46%;
+                width: 76px;
+                border-width: 6px;
+            }
+
+            .home-console {
+                right: 24%;
+                width: 52%;
+                height: 12%;
+            }
+
+            .home-copy {
+                width: min(520px, calc(100% - 48px));
+                margin: 0 24px;
+                padding-top: 42px;
+            }
+
+            h1 {
+                max-width: 12ch;
+                font-size: 2.5rem;
+            }
+
+            .home-description {
+                max-width: 32ch;
+                font-size: 0.94rem;
+            }
+
+            .home-next {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 16px;
+                padding-top: 22px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .home-header {
+                padding-right: 14px;
+                padding-left: 14px;
+            }
+
+            .home-nav {
+                gap: 10px;
+            }
+
+            h1 {
+                font-size: 2.15rem;
+            }
+
+            .home-actions {
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <header class="home-header">
+        <a class="wordmark" href="/">PAINT ESTIMATOR</a>
+        <nav class="home-nav" aria-label="Main navigation">
+            <a href="/estimator.html">Estimator</a>
+            <a href="/login.html">Sign in</a>
+        </nav>
+    </header>
     <main>
-        <p class="eyebrow">Home painting service</p>
-        <h1>Home painting, clearly estimated.</h1>
-        <p>Choose your home size, paint finish and openings to see an itemized estimate.</p>
-        <a class="primary-link" href="/estimator.html">Open painting estimator</a>
+        <section class="home-stage" aria-labelledby="home-title">
+            <div class="home-room" aria-hidden="true">
+                <div class="home-wall">
+                    <div class="home-art"></div>
+                    <div class="home-window"></div>
+                    <div class="home-console"></div>
+                </div>
+                <div class="home-trim"></div>
+                <div class="home-floor"></div>
+            </div>
+            <div class="home-copy">
+                <p class="eyebrow">Your home, your finish</p>
+                <h1 id="home-title">Home painting estimate</h1>
+                <p class="home-description">Compare paint finishes and see a clear, itemized estimate for your space.</p>
+                <div class="home-actions">
+                    <a class="primary-link" href="/estimator.html">Start your estimate</a>
+                    <a class="home-secondary" href="/login.html">Sign in</a>
+                </div>
+            </div>
+        </section>
+        <div class="home-next" aria-label="Estimate overview">
+            <section>
+                <span>01</span>
+                <h2>Choose your space</h2>
+                <p>Use a BHK size or enter your wall area.</p>
+            </section>
+            <section>
+                <span>02</span>
+                <h2>Select a finish</h2>
+                <p>Compare paint quality and project costs.</p>
+            </section>
+            <section>
+                <span>03</span>
+                <h2>Plan the work</h2>
+                <p>Save your estimate or request a booking.</p>
+            </section>
+        </div>
     </main>
 </body>
 </html>
