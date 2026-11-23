@@ -849,6 +849,99 @@ button:disabled {
     gap: 8px;
 }
 
+.booking-review {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+}
+
+.booking-review h3 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+}
+
+.review-rating {
+    margin: 0 0 14px;
+    padding: 0;
+    border: 0;
+}
+
+.review-rating legend {
+    margin-bottom: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.review-stars {
+    display: flex;
+    gap: 4px;
+}
+
+.review-star {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.review-star input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+}
+
+.review-star span {
+    color: #aebbb3;
+    font-size: 1.8rem;
+    line-height: 1;
+    transition: color 120ms ease;
+}
+
+.review-star input:focus-visible + span {
+    outline: 3px solid #e6a18f;
+    outline-offset: 3px;
+}
+
+.review-star input:checked + span,
+.review-stars[data-rating="1"] .review-star:nth-child(-n + 1) span,
+.review-stars[data-rating="2"] .review-star:nth-child(-n + 2) span,
+.review-stars[data-rating="3"] .review-star:nth-child(-n + 3) span,
+.review-stars[data-rating="4"] .review-star:nth-child(-n + 4) span,
+.review-stars[data-rating="5"] .review-star:nth-child(-n + 5) span,
+.review-star:hover span {
+    color: #c59a42;
+}
+
+.booking-review-form textarea {
+    display: block;
+    margin-top: 8px;
+    resize: vertical;
+}
+
+.review-feedback {
+    margin: 8px 0 12px;
+    color: var(--error);
+    font-size: 0.86rem;
+}
+
+.booking-review-summary p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
+
+.booking-review-summary .booking-review-rating {
+    color: var(--green-dark);
+    font-weight: 700;
+}
+
 .no-tax-note {
     margin: 12px 0 0;
     font-size: 0.74rem;

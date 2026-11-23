@@ -146,6 +146,7 @@ All API paths are under `/api`. Private routes use `Authorization: Bearer <token
 | POST | `/api/bookings` | Create a booking from a current or saved estimate |
 | GET | `/api/bookings/mine` | List the signed-in customer's bookings |
 | PATCH | `/api/bookings/:id/cancel` | Cancel an owned pending booking |
+| POST | `/api/bookings/:id/review` | Submit one rating and optional experience for an owned completed booking |
 | GET | `/api/admin/bookings` | List all bookings for an admin |
 | PATCH | `/api/admin/bookings/:id/status` | Change a booking status |
 | PUT | `/api/admin/settings` | Update supported rate fields |

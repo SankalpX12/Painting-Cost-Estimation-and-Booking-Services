@@ -175,4 +175,69 @@ router.patch('/:id/cancel', async function (request, response) {
     }
 });
 
+// Accepts one customer review after their booking has been completed.
+router.post('/:id/review', async function (request, response) {
+    if (!mongoose.Types.ObjectId.isValid(request.params.id)) {
+        return response.status(404).json({ message: 'Booking not found.' });
+    }
+
+    const body = request.body || {};
+    const rating = body.rating;
+    const experience = typeof body.experience === 'string' ? body.experience.trim() : '';
+
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+        return response.status(400).json({ message: 'Choose a rating from 1 to 5 stars.' });
+    }
+
+    if (body.experience !== undefined && typeof body.experience !== 'string') {
+        return response.status(400).json({ message: 'Enter your experience as text.' });
+    }
+
+    if (experience.length > 1000) {
+        return response.status(400).json({ message: 'Your experience must be 1,000 characters or fewer.' });
+    }
+
+    try {
+        const booking = await Booking.findOneAndUpdate({
+            _id: request.params.id,
+            user: request.account.id,
+            status: 'completed',
+            review: { $exists: false }
+        }, {
+            $set: {
+                review: {
+                    rating: rating,
+                    experience: experience,
+                    submittedAt: new Date()
+                }
+            }
+        }, {
+            new: true,
+            runValidators: true
+        });
+
+        if (booking) {
+            return response.status(201).json({ booking: booking.toObject() });
+        }
+
+        const existingBooking = await Booking.findOne({
+            _id: request.params.id,
+            user: request.account.id
+        });
+
+        if (!existingBooking) {
+            return response.status(404).json({ message: 'Booking not found.' });
+        }
+
+        if (existingBooking.status !== 'completed') {
+            return response.status(400).json({ message: 'You can review a booking after it is marked complete.' });
+        }
+
+        return response.status(409).json({ message: 'You have already reviewed this booking.' });
+    } catch (error) {
+        console.error('Could not save booking review:', error.message);
+        return response.status(500).json({ message: 'Could not save your review.' });
+    }
+});
+
 module.exports = router;
