@@ -103,6 +103,7 @@
             border: 10px solid #fffdf6;
             background: #a9cbd1;
             box-shadow: 0 10px 24px rgb(29 41 37 / 12%);
+            animation: room-reveal 700ms cubic-bezier(0.2, 0.75, 0.25, 1) 100ms both;
         }
 
         .home-window::before,
@@ -135,6 +136,7 @@
             border: 8px solid #fffdf6;
             background: #d59a68;
             box-shadow: 0 8px 18px rgb(29 41 37 / 12%);
+            animation: room-reveal 650ms cubic-bezier(0.2, 0.75, 0.25, 1) 220ms both;
         }
 
         .home-art::after {
@@ -154,6 +156,7 @@
             border-radius: 10px 10px 0 0;
             background: #527166;
             box-shadow: 0 -5px 16px rgb(29 41 37 / 12%);
+            animation: console-rise 600ms cubic-bezier(0.2, 0.75, 0.25, 1) 320ms both;
         }
 
         .home-trim {
@@ -217,6 +220,13 @@
             color: #ffffff;
             font-weight: 700;
             text-decoration: none;
+            transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+        }
+
+        .primary-link:hover {
+            transform: translateY(-2px);
+            background: var(--green);
+            box-shadow: 0 8px 18px rgb(29 41 37 / 16%);
         }
 
         .home-secondary {
@@ -224,6 +234,11 @@
             font-weight: 700;
             text-decoration-color: var(--coral);
             text-underline-offset: 4px;
+            transition: color 160ms ease;
+        }
+
+        .home-secondary:hover {
+            color: var(--coral);
         }
 
         .home-next {
@@ -237,6 +252,15 @@
         .home-next section {
             padding-top: 10px;
             border-top: 1px solid var(--line);
+            animation: arrive 420ms ease-out both;
+        }
+
+        .home-next section:nth-child(2) {
+            animation-delay: 80ms;
+        }
+
+        .home-next section:nth-child(3) {
+            animation-delay: 160ms;
         }
 
         .home-next span {
@@ -262,8 +286,25 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes room-reveal {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes console-rise {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-            .home-copy { animation: none; }
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         @media (max-width: 700px) {

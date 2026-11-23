@@ -444,6 +444,13 @@ input[type="checkbox"] {
 .quality-card {
     justify-content: space-between;
     min-height: 72px;
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.quality-card:hover,
+.quality-card:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgb(29 41 37 / 8%);
 }
 
 .quality-card-main {
@@ -557,6 +564,7 @@ input[type="checkbox"] {
     border-top: 4px solid var(--green);
     background: var(--surface);
     box-shadow: 0 12px 32px rgb(34 54 44 / 8%);
+    animation: result-arrive 480ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
 
 .result-topline {
@@ -795,6 +803,20 @@ button:disabled {
     padding: 20px;
     border-left: 3px solid var(--green);
     background: var(--surface);
+    animation: result-arrive 360ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.saved-estimate:nth-child(2) {
+    animation-delay: 60ms;
+}
+
+.saved-estimate:nth-child(3) {
+    animation-delay: 120ms;
+
+}
+
+.saved-estimate:nth-child(4) {
+    animation-delay: 180ms;
 }
 
 .saved-estimate-heading {
@@ -1052,6 +1074,14 @@ button:disabled {
     font-size: 0.78rem;
     text-align: left;
     cursor: pointer;
+    transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.matching-colour:hover,
+.matching-colour:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--green);
+    box-shadow: 0 5px 14px rgb(29 41 37 / 10%);
 }
 
 .matching-swatch {
@@ -1060,6 +1090,11 @@ button:disabled {
     height: 30px;
     border: 1px solid var(--line);
     border-radius: 50%;
+}
+
+@keyframes result-arrive {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 800px) {
@@ -1163,5 +1198,16 @@ button:disabled {
 
     .site-footer {
         flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 }
