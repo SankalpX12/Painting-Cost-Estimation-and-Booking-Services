@@ -29,7 +29,12 @@ async function sendAccountRequest(path, values) {
 function finishSignIn(result) {
     window.localStorage.setItem('token', result.token);
     window.localStorage.setItem('user', JSON.stringify(result.user));
-    window.location.href = '/estimator.html';
+
+    if (result.user.role === 'admin') {
+        window.location.href = '/admin.html';
+    } else {
+        window.location.href = '/estimator.html';
+    }
 }
 
 // Connects the sign-in form to the login API.

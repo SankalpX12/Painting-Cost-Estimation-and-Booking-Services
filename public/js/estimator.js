@@ -751,6 +751,21 @@ function startEstimator() {
     resultPanel.hidden = false;
     document.getElementById('account-link').hidden = true;
     document.getElementById('logout-button').hidden = false;
+
+    const storedAccount = window.localStorage.getItem('user');
+
+    if (storedAccount) {
+        try {
+            const account = JSON.parse(storedAccount);
+
+            if (account.role === 'admin') {
+                document.getElementById('admin-dashboard-link').hidden = false;
+            }
+        } catch (error) {
+            window.localStorage.removeItem('user');
+        }
+    }
+
     estimatorForm.addEventListener('input', updateEstimate);
     estimatorForm.addEventListener('change', updateEstimate);
     document.getElementById('add-opening').addEventListener('click', addOpeningRow);
