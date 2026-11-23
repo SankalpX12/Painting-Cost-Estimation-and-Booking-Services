@@ -50,6 +50,10 @@ function createAdminBooking(booking) {
 
     const detail = document.createElement('p');
     detail.textContent = booking.contact.email + ' · ' + booking.contact.phone + ' · ' + new Date(booking.preferredStartDate).toLocaleDateString('en-IN');
+    const status = document.createElement('p');
+    status.className = 'booking-status';
+    status.setAttribute('role', 'status');
+    status.textContent = 'Status: ' + booking.status;
 
     const controls = document.createElement('div');
     controls.className = 'admin-booking-controls';
@@ -65,6 +69,33 @@ function createAdminBooking(booking) {
     }
 
     statusSelect.value = booking.status;
+    if (booking.status === 'pending') {
+        const approveButton = document.createElement('button');
+        approveButton.className = 'button button-primary';
+        approveButton.type = 'button';
+        approveButton.textContent = 'Approve booking';
+        approveButton.addEventListener('click', async function () {
+            approveButton.disabled = true;
+
+            try {
+                await sendAdminRequest('/api/admin/bookings/' + encodeURIComponent(booking._id) + '/status', 'PATCH', {
+                    status: 'confirmed'
+                });
+                booking.status = 'confirmed';
+                statusSelect.value = 'confirmed';
+                status.textContent = 'Status: confirmed';
+                approveButton.remove();
+                adminRateMessage.textContent = 'Booking approved.';
+                adminRateMessage.hidden = false;
+            } catch (error) {
+                approveButton.disabled = false;
+                showAdminMessage(error.message);
+            }
+        });
+
+        controls.appendChild(approveButton);
+    }
+
     const updateButton = document.createElement('button');
     updateButton.className = 'button button-secondary';
     updateButton.type = 'button';
@@ -77,6 +108,16 @@ function createAdminBooking(booking) {
                 status: statusSelect.value
             });
             booking.status = statusSelect.value;
+            status.textContent = 'Status: ' + booking.status;
+
+            if (booking.status !== 'pending') {
+                const pendingApproveButton = controls.querySelector('.button-primary');
+
+                if (pendingApproveButton) {
+                    pendingApproveButton.remove();
+                }
+            }
+
             adminRateMessage.textContent = 'Booking status updated.';
             adminRateMessage.hidden = false;
         } catch (error) {
@@ -90,6 +131,7 @@ function createAdminBooking(booking) {
     controls.appendChild(updateButton);
     item.appendChild(heading);
     item.appendChild(detail);
+    item.appendChild(status);
     item.appendChild(controls);
     return item;
 }
